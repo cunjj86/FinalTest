@@ -1,5 +1,6 @@
 package com.tje.finaltest;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
@@ -52,6 +53,10 @@ public class LoginActivity extends BaseActivity {
 //                                SharedPreference 에 token 을 저장
 
                                         ContextUtil.setUserToken(mContext, token);
+
+                                        Intent intent = new Intent(mContext, MainActivity.class);
+                                        intent.putExtra("userToken", token);
+                                        startActivity(intent);
                                     }
                                     else {
                                         Toast.makeText(mContext, "로그인에 실패하였습니다!", Toast.LENGTH_SHORT).show();
