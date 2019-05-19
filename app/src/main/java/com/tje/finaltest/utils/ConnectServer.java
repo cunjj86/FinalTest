@@ -28,7 +28,7 @@ public class ConnectServer {
         void onResponse(JSONObject json);
     }
 
-    public static void postRequestSignIn(Context context, String user_id, String password, final JsonResponseHandler handler) {
+    public static void postRequestSignIn(Context context, String userid, String password, final JsonResponseHandler handler) {
 
 //        클라이언트 역할은 무슨 메소드이든 동일. 항상 복붙
 
@@ -38,7 +38,7 @@ public class ConnectServer {
 //        formData에 파라미터를 첨부하는 코드
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("user_id", user_id)
+                .add("user_id", userid)
                 .add("password", password)
                 .build();
 
@@ -58,7 +58,22 @@ public class ConnectServer {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
 
+                String responseContent = response.body().string();
 
+                Log.d("서버 응답 내용", responseContent);
+
+                try {
+//                    받아온 응답을 JSON 객체로 변환
+                    JSONObject json = new JSONObject(responseContent);
+
+                    if (handler != null) {
+//                        화면에서 처리하는 코드가 있으면 실행시켜줌.
+                        handler.onResponse(json);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/nameOrEmailTxt"
+                            android:id="@+id/idEdt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/passwordTxt"
+                            android:id="@+id/pwEdt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -102,7 +102,7 @@
                     </FrameLayout>
 
                     <Button
-                        android:id="@+id/signInBtn"
+                        android:id="@+id/loginBtn"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginTop="20dp"
