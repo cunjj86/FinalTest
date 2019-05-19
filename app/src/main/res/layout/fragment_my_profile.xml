@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
-                tools:text="계좌번호"/>
+                android:text="계좌번호"/>
 
             <TextView
                 android:id="@+id/billingTxt"
