@@ -3,11 +3,11 @@ package com.tje.finaltest;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 
-import com.tje.finaltest.databinding.ActivityLogiBinding;
+import com.tje.finaltest.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends BaseActivity {
 
-    ActivityLogiBinding act;
+    ActivityLoginBinding act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void bindViews() {
 
-        act = DataBindingUtil.setContentView(this, R.layout.activity_logi);
+        act = DataBindingUtil.setContentView(this, R.layout.activity_login);
     }
 }
