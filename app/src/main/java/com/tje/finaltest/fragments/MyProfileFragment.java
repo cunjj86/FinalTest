@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.tje.finaltest.R;
 import com.tje.finaltest.databinding.FragmentMyProfileBinding;
+import com.tje.finaltest.datas.MyProfile;
+import com.tje.finaltest.utils.ConnectServer;
+import com.tje.finaltest.utils.ContextUtil;
 
 public class MyProfileFragment extends Fragment {
 
@@ -29,6 +33,15 @@ public class MyProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+    }
 
+    public void setContent(MyProfile myProfile) {
+
+        Glide.with(this).load(myProfile.logo).into(binding.profileImg);
+
+        binding.userNameTxt.setText(myProfile.name);
+        binding.billingTxt.setText(String.format("%s : %s", myProfile.bankName, myProfile.billingAcc));
+        binding.phoneNumberTxt.setText(myProfile.phoneNumber);
+        binding.emailTxt.setText(myProfile.email);
     }
 }

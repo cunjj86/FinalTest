@@ -2,11 +2,19 @@ package com.tje.finaltest;
 
 import android.databinding.DataBindingUtil;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.tje.finaltest.adapters.MainViewPagerAdapter;
 import com.tje.finaltest.databinding.ActivityMainBinding;
+import com.tje.finaltest.datas.MyProfile;
+import com.tje.finaltest.fragments.MyProfileFragment;
+import com.tje.finaltest.utils.ConnectServer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity {
 
@@ -43,6 +51,52 @@ public class MainActivity extends BaseActivity {
 
         mvpa = new MainViewPagerAdapter(getSupportFragmentManager(), 2);
         act.viewPager.setAdapter(mvpa);
+
+        Fragment currentFlag = mvpa.getItem(act.viewPager.getCurrentItem());
+        String token = getIntent().getStringExtra("userToken");
+
+        ConnectServer.getRequestMyInfo(mContext, token, new ConnectServer.JsonResponseHandler() {
+            @Override
+            public void onResponse(JSONObject json) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        int code = 0;
+                        try {
+                            code = json.getInt("code");
+
+                            if (code == 200) {
+
+                                JSONObject data = json.getJSONObject("data");
+                                JSONObject user = data.getJSONObject("user");
+
+                                String logo = user.getString("profile_image");
+                                String name = user.getString("name");
+                                String phone = user.getString("phone");
+                                String email = user.getString("email");
+                                String billing = user.getString("billing_account");
+
+                                JSONObject bank = user.getJSONObject("bank_code");
+                                String bankName = bank.getString("name");
+
+                                MyProfile myProfile = new MyProfile(name, logo, phone, email, bankName, billing);
+
+                                Log.d("이름:",myProfile.name);
+
+                                ((MyProfileFragment) currentFlag).setContent(myProfile);
+                            }
+                            else {
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+            }
+        });
 
     }
 
