@@ -6,15 +6,23 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tje.finaltest.adapters.MainViewPagerAdapter;
+import com.tje.finaltest.adapters.NoticeAdapter;
 import com.tje.finaltest.databinding.ActivityMainBinding;
 import com.tje.finaltest.datas.MyProfile;
+import com.tje.finaltest.datas.Notice;
 import com.tje.finaltest.fragments.MyProfileFragment;
+import com.tje.finaltest.fragments.NoticeFragment;
 import com.tje.finaltest.utils.ConnectServer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
@@ -55,6 +63,11 @@ public class MainActivity extends BaseActivity {
         Fragment currentFlag = mvpa.getItem(act.viewPager.getCurrentItem());
         String token = getIntent().getStringExtra("userToken");
 
+        setMyProfile(currentFlag, token);
+
+    }
+
+    void setMyProfile(Fragment cFlag, String token) {
         ConnectServer.getRequestMyInfo(mContext, token, new ConnectServer.JsonResponseHandler() {
             @Override
             public void onResponse(JSONObject json) {
@@ -84,9 +97,16 @@ public class MainActivity extends BaseActivity {
 
                                 Log.d("이름:",myProfile.name);
 
-                                ((MyProfileFragment) currentFlag).setContent(myProfile);
+                                ((MyProfileFragment) cFlag).setContent(myProfile);
                             }
                             else {
+
+                                try {
+                                    String message = json.getString("message");
+                                    Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
                             }
                         } catch (JSONException e) {
@@ -97,7 +117,6 @@ public class MainActivity extends BaseActivity {
                 });
             }
         });
-
     }
 
     @Override
