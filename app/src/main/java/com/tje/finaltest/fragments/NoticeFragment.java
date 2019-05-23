@@ -1,6 +1,7 @@
 package com.tje.finaltest.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,8 +10,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.tje.finaltest.NoticeActivity;
 import com.tje.finaltest.R;
 import com.tje.finaltest.adapters.NoticeAdapter;
 import com.tje.finaltest.databinding.FragmentNoticeBinding;
@@ -48,6 +51,18 @@ public class NoticeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        binding.noticeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Notice clickedNoticeitem = noticeList.get(position);
+
+                Intent intent = new Intent(getActivity(), NoticeActivity.class);
+                intent.putExtra("clickNotice", clickedNoticeitem);
+                startActivity(intent);
+
+            }
+        });
     }
 
     @Override

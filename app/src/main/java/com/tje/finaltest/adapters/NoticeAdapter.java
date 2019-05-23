@@ -44,7 +44,7 @@ public class NoticeAdapter extends ArrayAdapter<Notice> {
         title.setText(noticeData.title);
 
         String inputDtm = noticeData.inputDtm;
-        String resInputDate = inputDtm.substring(0, 9);
+        String resInputDate = inputDtm.substring(0, 10);
 
         inputDate.setText(resInputDate);
 
